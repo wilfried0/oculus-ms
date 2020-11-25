@@ -1,7 +1,8 @@
 package com.backend.oculus.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,12 +12,19 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "imeis")
-public class Imei {
+public class Imei implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,6 +33,8 @@ public class Imei {
 	
 	@ManyToOne
 	@JsonIgnore
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Oculus oculus;
 	
 	public Imei() {
@@ -58,6 +68,7 @@ public class Imei {
 	public void setOculus(Oculus oculus) {
 		this.oculus = oculus;
 	}
+	
 	
 	
 }

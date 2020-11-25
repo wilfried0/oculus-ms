@@ -1,7 +1,7 @@
 package com.backend.oculus.controller;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +60,10 @@ public class OculusController {
 				oculus.getDescription(), 
 				oculus.getPhone(), 
 				oculus.getLatitude(), 
-				oculus.getLongitude(), 
-				oculus.getCreated_at(), 
+				oculus.getLongitude(),  
 				oculus.getImage1(), 
 				oculus.getImage2(),
+				oculus.getCreated_at(),
 				oculus.getMultiImei()
 		);
 		//Set<String> strImeis = oculus.getImeis();
@@ -86,6 +86,27 @@ public class OculusController {
 	public ResponseEntity<List<Oculus>> getOculus(){
 		return ResponseEntity.ok(oculusRepository.findAll());
 	}
+	
+	@GetMapping("/")
+	public ResponseEntity<Optional<Oculus>> getUnOculus(@RequestParam(name = "id", required = false) Long id){
+		return ResponseEntity.ok(oculusRepository.findById(id));
+	}
+	
+	@GetMapping("/ville")
+	public ResponseEntity<List<Oculus>> getOculusByVille(@RequestParam(name = "ville", required = false) String ville){
+		return ResponseEntity.ok(oculusRepository.findByVille(ville));
+	}
+	
+	@GetMapping("/incident")
+	public ResponseEntity<List<Oculus>> getOculusByIncident(@RequestParam(name = "incident", required = false) String incident){
+		return ResponseEntity.ok(oculusRepository.findByIncident(incident));
+	}
+	
+	@GetMapping("/{ville}/{incident}")
+	public ResponseEntity<List<Oculus>> getOculusByVilleAndIncident(@PathVariable String ville, @PathVariable String incident){
+		return ResponseEntity.ok(oculusRepository.findByVilleAndIncident(ville, incident));
+	}
+	
 	
 	@GetMapping("/imeis")
 	public Iterable<Imei>getImeis() {

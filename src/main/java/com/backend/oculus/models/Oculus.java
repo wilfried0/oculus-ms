@@ -11,8 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -34,6 +35,8 @@ public class Oculus {
 	private String created_at;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "oculus")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Set<Imei> multiImei = new HashSet<>();
 	
 	public Oculus() {
@@ -60,7 +63,7 @@ public class Oculus {
 	}
 	
 	public Oculus(String ville, String incident, String description, String phone, double latitude,
-			double longitude, String created_at, String image1, String image2, Set<Imei> multiImei) {
+			double longitude, String image1, String image2, String created_at, Set<Imei> multiImei) {
 		super();
 		this.ville = ville;
 		this.incident = incident;
@@ -161,6 +164,7 @@ public class Oculus {
 				+ ", getCreated_at()=" + getCreated_at() + ", getImeis()=" + getMultiImei() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 	
 	
 }
